@@ -31,15 +31,8 @@ module TicTacToe where
     countEmptyCells (Board cells) = sum [ 1 | row <- cells, cell <- row, isNothing cell]
 
     full :: [Cell] -> Maybe Player
-    full xs 
-        | len == 1  = head xs
-        | otherwise = Nothing
-        where len = (length (nub xs))
-    -- nem tudom eldönteni melyik a rosszabb megoldás :(
-    -- full [x]        = x
-    -- full (x:y:xs)
-    --     | x == y    = full (y:xs)
-    --     | otherwise = Nothing
+    full (cell:cells) | all (== cell) cells = cell
+    full _                                  = Nothing
 
     winner :: Board -> Maybe Player
     winner (Board cells) = head ((filter (\x -> isJust x) (getFulls cells)) ++ [Nothing])
